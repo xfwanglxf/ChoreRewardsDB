@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加得分任务</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 优化视口设置 -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+        h2 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 20px;
+            font-size: 26px;
+            font-weight: 500;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-group input:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 5px rgba(38, 143, 255, 0.2);
+            outline: none;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .search-btn, .return-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .search-btn:hover, .return-btn:hover {
+            background-color: #0056b3;
+        }
+        .return-btn {
+            background-color: #007bff;
+        }
+        .return-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>增加得分任务</h2>
+        <form action="/add_task" method="post">
+            <div class="form-group">
+                <label for="description">任务描述</label>
+                <input type="text" id="description" name="description" placeholder="例如：做家务！" required>
+            </div>
+            <div class="form-group">
+                <label for="points">奖励积分</label>
+                <input type="number" id="points" name="points" placeholder="输入奖励的积分！" required>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="search-btn">添加任务</button>
+                <a href="{{ url_for('dashboard') }}" class="return-btn">返回</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

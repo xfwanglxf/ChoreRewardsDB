@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加兑换奖励</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 优化视口设置 -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 18px; /* 增大基础字体大小 */
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%; /* 增加容器宽度的适应性 */
+            max-width: 450px;
+        }
+        h2 {
+            color: #343a40;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 500;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px; /* 增大输入框的填充 */
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 18px; /* 增大输入框的字体大小 */
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-group input:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 5px rgba(38, 143, 255, 0.2);
+            outline: none;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .search-btn, .return-btn {
+            padding: 12px 24px; /* 增大按钮的填充 */
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px; /* 增大按钮的字体大小 */
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .search-btn:hover, .return-btn:hover {
+            background-color: #0056b3;
+        }
+        .return-btn {
+            background-color: #007bff;
+        }
+        .return-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>增加兑换奖励</h2>
+        <form action="/add_reward" method="post">
+            <div class="form-group">
+                <label for="description">奖励描述</label>
+                <input type="text" id="description" name="description" placeholder="输入需要兑换的奖励名字！" required>
+            </div>
+            <div class="form-group">
+                <label for="points_needed">扣除积分</label>
+                <input type="number" id="points_needed" name="points_needed" placeholder="输入需要扣除的分数！"required>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="search-btn">添加奖励</button>
+                <a href="{{ url_for('dashboard') }}" class="return-btn">返回</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

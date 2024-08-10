@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>积分奖励记录</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 优化视口设置 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+            font-size: 16px; /* 增加默认字体大小 */
+        }
+        .container {
+            width: 90%; /* 减少宽度以适应小屏幕 */
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 26px; /* 增加标题字体大小 */
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap; /* 允许按钮换行 */
+            justify-content: center; /* 居中对齐 */
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .search-btn, .return-btn {
+            padding: 12px 20px; /* 增大按钮的填充 */
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px; /* 增大按钮字体大小 */
+            text-decoration: none; /* 去掉下划线 */
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .search-btn:hover, .return-btn:hover {
+            background-color: #0056b3;
+        }
+        .return-btn {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 16px; /* 增大表格字体大小 */
+        }
+        th, td {
+            padding: 14px; /* 增大表格单元格的填充 */
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+            color: #495057;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>积分奖励记录</h2>
+        <!-- 为每个孩子的名字创建按钮 -->
+        <div class="button-container">
+            {% for name in usernames %}
+                <a href="{{ url_for('rewards_log', search_username=name) }}" class="return-btn">{{ name }}</a>
+            {% endfor %}
+            <a href="{{ url_for('rewards_log') }}" class="return-btn">重置</a>
+            <a href="{{ url_for('dashboard') }}" class="return-btn">返回</a>
+        </div>
+        <!-- 数据表格显示记录 -->
+        <table id="record-table">
+            <thead>
+                <tr>
+                    <th>孩子名字</th>
+                    <th>奖励描述</th>
+                    <th>积分变动</th>
+                    <th>时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                    <tr>
+                        <td>{{ record.username }}</td>
+                        <td>{{ record.description }}</td>
+                        <td>{{ record.points_change }}</td>
+                        <td>{{ record.timestamp }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

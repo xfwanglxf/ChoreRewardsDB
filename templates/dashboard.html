@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>积分奖励管理</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 为了响应式设计添加的meta标签 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            font-size: 18px; /* 增大字体以便在移动设备上更易阅读 */
+        }
+        .container {
+            width: 90%; /* 减小宽度以便在移动设备上更好适配 */
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 24px; /* 缩小字体以便在移动设备上更好适配 */
+        }
+        .links {
+            padding: 10px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .link-button {
+            display: inline-block;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 15px; /* 缩小填充以便更好适配 */
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+        .link-button:hover {
+            background-color: #0056b3;
+        }
+        .children-container {
+            display: flex;
+            flex-direction: column; /* 在移动设备上垂直排列孩子信息 */
+            gap: 20px;
+        }
+        .child-info {
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+        h3 {
+            color: #555;
+            margin-top: 0;
+            font-size: 22px; /* 增大字体以便更易阅读 */
+        }
+        .task-list {
+            margin-bottom: 20px;
+        }
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .task:last-child {
+            border-bottom: none;
+        }
+        .task-button {
+            background-color: #28a745;
+            border: none;
+            color: #fff;
+            padding: 8px 16px; /* 增大按钮填充以便更好点击 */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px; /* 增大字体以便更易阅读 */
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .task-button:hover {
+            background-color: #218838;
+        }
+        .total-points {
+            font-size: 22px; /* 增大字体以便更易阅读 */
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .logout-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px; /* 增大字体以便更易阅读 */
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .logout-link:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+
+        @media (min-width: 768px) {
+            /* 这些样式适用于大屏设备 */
+            .children-container {
+                flex-direction: row; /* 在大屏设备上改为横向布局 */
+                justify-content: space-between;
+            }
+            .child-info {
+                width: 48%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>积分奖励管理</h2>
+        <h2>欢迎, {{ user.username }}!</h2>
+
+        <div class="links">
+            <a href="/rewards_log" class="link-button">查看积分奖励记录</a>
+            <a href="{{ url_for('add_task') }}" class="link-button">增加得分任务</a>
+            <a href="{{ url_for('add_reward') }}" class="link-button">增加兑换奖励</a>
+            <a href="{{ url_for('register') }}" class="link-button">增加用户</a>
+        </div>
+
+        <div class="children-container">
+            {% for child in children %}
+                <div class="child-info">
+                    <h3>{{ child['username'] }} 的积分</h3>
+                    <p class="total-points">总积分: {{ child['points'] }}</p>
+
+                    <div class="task-list">
+                        {% for task in tasks %}
+                            <div class="task">
+                                <span>{{ task['description'] }} (奖励 {{ task['points'] }} 积分)</span>
+                                <form action="/admin/add_points" method="post" style="display:inline;">
+                                    <input type="hidden" name="user_id" value="{{ child['id'] }}">
+                                    <input type="hidden" name="task_id" value="{{ task['id'] }}">
+                                    <button type="submit" class="task-button">奖励</button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="links">
+            <a href="/logout" class="link-button">注销</a>
+        </div>
+    </div>
+</body>
+</html>
